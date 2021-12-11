@@ -41,14 +41,14 @@ export default function Home() {
   return (
     <>
       <section className="row" style={{padding: 0}}>
-        <div className="col-md-6 p-0">
+        <div className="col-md-6 p-0" style={{height: '60vh'}}>
             <Topheader />
-            <div className="" style={{padding: "50px 100px"}}>
+            <div className="" style={{padding: "0 100px 50px 100px"}}>
               <Slider />
             </div>
         </div>
-        <div className="col-md-6 p-0" style={{marginTop: 200}}>
-        <Image src="/car.jpg" alt="Hero image" width={771} height={272} crossOrigin="anonymous"/>
+        <div className="col-md-6 p-0" style={{marginTop: 150}}>
+          <Image src="/car.jpg" alt="Hero image" width={771} height={272} crossOrigin="anonymous"/>
         </div>
         <div className="col-md-12" style={{background: "#e76f51"}}>
           <div className="row">
