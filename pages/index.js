@@ -41,9 +41,10 @@ export default function Home() {
   return (
     <>
       <section className="row" style={{padding: 0}}>
-        <div className="col-md-6 p-0" style={{height: '60vh'}}>
+        <div className="col-md-6 p-0" style={{height: '70vh'}}>
             <Topheader />
             <div className="" style={{padding: "0 100px 50px 100px"}}>
+              <h1 className="" style={{marginBottom: '40px', fontSize: 50, fontWeight: 800}}>We're coming soon... <i className="bi bi-hourglass-split"></i></h1>
               <Slider />
             </div>
         </div>
