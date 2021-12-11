@@ -6,8 +6,6 @@ import axios from "axios";
 import {Button, Modal, Header, Footer} from "react-bootstrap"
 import React, { useState } from "react";
 import Image from "next/image"
-import Head from "next/head";
-import Script from 'next/script'
 
 export default function Home() {
  
