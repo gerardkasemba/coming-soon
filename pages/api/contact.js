@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import nodemailer from 'nodemailer'
 
-export default async (req, res) => {
+const contact = async (req, res) => {
 
   const {email} = req.body
   const transporter = nodemailer.createTransport({
@@ -39,3 +39,5 @@ export default async (req, res) => {
   }
   res.status(200).json(req.body)
 }
+
+export default contact
