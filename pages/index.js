@@ -1,102 +1,216 @@
-import Topheader from "../components/inc/header";
-import Link from "next/link"
-import Slider from "../components/slider";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import {Button, Modal, Header, Footer} from "react-bootstrap"
-import React, { useState } from "react";
-import Image from "next/image"
+import React, { useState } from 'react';
+import Head from 'next/head';
+import { FormattedMessage } from 'react-intl';
+import { NextSeo } from 'next-seo';
+import Link from 'next/link';
+import Particles from 'react-particles-js';
+import LanguageProvider from '@deadline/common/LanguageSwitcher/context/language.provider';
+import LanguageSwitcher from '@deadline/common/LanguageSwitcher';
+import languageConfig from '@deadline/common/LanguageSwitcher/config';
+import NormalClock from '@deadline/components/NormalClock/NormalClock.js';
+import MainWrapper, {
+  MainContentSection,
+  NormalClockWrapper,
+  FooterSection,
+  ContactFormWrap,
+  LogoImageContainer,
+  ParticleContainer,
+  ContentWrapper,
+  NotifyButton,
+} from '@deadline/common/ui/eleven.style';
 
-export default function Home() {
- 
-  const [show, setShow] = useState(false);
+import LogoImage from '@deadline/common/static/images/logoOne.png';
+import { SOCIAL_PROFILES } from '@deadline/common/data/social-share/three';
+// Language translation files
+import localEng from '@deadline/common/data/translation/eleven/en.json';
+import localAr from '@deadline/common/data/translation/eleven/ar.json';
+import localEs from '@deadline/common/data/translation/eleven/es.json';
+import localDe from '@deadline/common/data/translation/eleven/de.json';
+import localCn from '@deadline/common/data/translation/eleven/zh.json';
+import localIl from '@deadline/common/data/translation/eleven/he.json';
+import { Container, SocialShare } from '../components';
+import ContactForm from '@deadline/components/ContactForm/ContactForm';
+import Button from '@deadline/components/Button';
+import Particle2 from '@deadline/common/static/images/eleven/2.png';
+import Particle3 from '@deadline/common/static/images/eleven/3.png';
+import Particle6 from '@deadline/common/static/images/eleven/6.png';
+import Particle7 from '@deadline/common/static/images/eleven/7.png';
+import Particle8 from '@deadline/common/static/images/eleven/8.png';
+import Particle9 from '@deadline/common/static/images/eleven/9.png';
+// Language translation Config
+const messages = {
+  en: localEng,
+  ar: localAr,
+  es: localEs,
+  de: localDe,
+  zh: localCn,
+  he: localIl,
+};
 
-  const handleClose = () => setShow(false);
+const deadline = new Date(Date.parse(new Date()) + 22 * 24 * 60 * 60 * 1000);
 
-  const {register, handleSubmit, errors, reset} = useForm();
-  async function onSubmitForm(values) {
-    let config = {
-      method: "post",
-      url: `http://localhost:3000/api/contact`,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: values,
-    }
-    try{
-      const response = await axios(config)
-      if(response.status == 200){
-        reset()
-        setShow(true);
-        // alert("Thank you or subscribing!")
-      }
-    }catch(err){
-      console.log(err)
-    }
-  }
-  // function onSubmitForm(values) {
-  //   console.log(values)
-  // }
-
+const ParticlesComponent = () => {
   return (
     <>
-      <section className="row" style={{padding: 0}}>
-        <div className="col-md-6 p-0" style={{height: '70vh'}}>
-            <Topheader />
-            <div className="" style={{padding: "0 100px 50px 100px"}}>
-              <h1 className="" style={{marginBottom: '40px', fontSize: 45, fontWeight: 800}}>We&apos;re coming soon <i className="bi bi-hourglass-split"></i></h1>
-              <Slider />
-            </div>
-        </div>
-        <div className="col-md-6 p-0" style={{marginTop: 150}}>
-          <Image src="/car.jpg" alt="Hero image" width={771} height={272} crossOrigin="anonymous"/>
-        </div>
-        <div className="col-md-12" style={{background: "#e76f51"}}>
-          <div className="row">
-            <div className="col-md-6" style={{padding: 100}}>
-              <p style={{lineHeight: "1.7", fontSize: 17, color: "#fff"}}>
-                Generally, you need to have a good credit score in order to buy a car, but Carsemba eliminates that requirement. With our help, you don&apos;t have to worry about going through a bank and finance a vehicle.
-              </p>
-              <p style={{lineHeight: "1.7", fontSize: 17, color: "#fff"}}>
-                We are building a great platform, simple process that makes the experience exciting and easy for both the car buyer and seller.
-              </p>
-              <p style={{lineHeight: "1.7", fontSize: 17, color: "#fff"}}>
-                If you want to buy or sell a car without dealing with banks and credit score restrictions, you are at the right place! We have an ever-growing car offer, and we focus on bringing you the best possible results and experience.
-              </p>
-            </div>
-            <div className="col-md-6" style={{padding: 100}}>
-              <form onSubmit={handleSubmit(onSubmitForm)}>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <input type="email" {...register("email", { required: 
-                    {value: true, message: "You need to enter a valid email address." },
-                    minLength: {value: 8, message: "This is not long enought to be an email"},
-                    maxLength: {value: 120, message: "This is too long"}
-                    })} name="email" className="form-control" placeholder="Enter your email" style={{border: "1px solid #fff", outline: "none"}}/>
-                    <p style={{color: "#fff", margin: "5px 0 0 0"}}></p>
-                  </div>
-                  <div className="col-sm-6">
-                    <input type="submit" value="Subscribe" className="btn-car btn-sm btn-car-primary" />
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+      <Particles
+        className="particle"
+        params={{
+          particles: {
+            number: {
+              value: 14,
+              density: { enable: true, value_area: 1400 },
+            },
 
-        <Modal show={show}>
-          <Modal.Header closeButton>
-            <Modal.Title>Emaile Received</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Thank you for subscribing! We&apos;ll be in touch very soon, promise :)</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </section>
+            shape: {
+              type: ['images'],
+              images: [
+                {
+                  src: `${Particle2}`,
+                  width: 15,
+                  height: 15,
+                },
+                {
+                  src: `${Particle3}`,
+                  width: 45,
+                  height: 40,
+                },
+                {
+                  src: `${Particle6}`,
+                  width: 26,
+                  height: 26,
+                },
+                {
+                  src: `${Particle7}`,
+                  width: 54,
+                  height: 30,
+                },
+                {
+                  src: `${Particle8}`,
+                  width: 44,
+                  height: 30,
+                },
 
+                {
+                  src: `${Particle9}`,
+                  width: 50,
+                  height: 30,
+                },
+              ],
+            },
+            opacity: {
+              value: 1,
+              random: true,
+              anim: { enable: false, speed: 1, opacity_min: 1, sync: false },
+            },
+            size: {
+              value: 10,
+              random: false,
+            },
+            line_linked: {
+              enable: false,
+            },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: 'none',
+              random: false,
+              straight: false,
+              bounce: true,
+              attract: { enable: true, rotateX: 100, rotateY: 400 },
+            },
+          },
+          retina_detect: true,
+        }}
+      />
     </>
-  )
-}
+  );
+};
+
+const IndexPage = () => {
+  const [visible, setVisible] = useState(false);
+  const toggleContact = () => {
+    setVisible(true);
+  };
+
+  return (
+    <LanguageProvider messages={messages}>
+      <React.Fragment>
+        <Head>
+          {/* Load google fonts */}
+          <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,500,600,700&display=swap"
+            rel="stylesheet"
+          />
+          <link
+            href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <NextSeo
+          title="The most affordable way to buy used cars for anyone."
+          description="Crasemba the most affordable way to buy used cars for anyone, cheap cars, cheap used cars, used cars, used, bad credit, credit, bad"
+        />
+        <MainWrapper>
+          <ParticleContainer>
+            <ParticlesComponent />
+          </ParticleContainer>
+          <LogoImageContainer>
+            <Link href={'/eleven'}>
+              <a>
+                <img src="carsemba_logo.svg" width={150} alt="logo" />
+              </a>
+            </Link>
+          </LogoImageContainer>
+          <Container className="mainContainer">
+            <MainContentSection>
+              <NormalClockWrapper>
+                <NormalClock countdown={deadline} />
+              </NormalClockWrapper>
+              <ContentWrapper>
+                <p>
+                  <FormattedMessage id="ticker" />
+                </p>
+                <h2 id="mainMessage" style={{textAlign: "left", padding: "20px 0", lineHeight: '1.2em'}}>
+                  <b style={{color:"#e76f51"}}>Carsemba Inc.</b><br /><p style={{fontSize: 25, textAlign: "left", lineHeight: '1.3em'}}>the most affordable way to buy used cars for anyone.</p>
+                  {/* <FormattedMessage /> */}
+                </h2>
+                {visible ? (
+                  <ContactFormWrap>
+                    <ContactForm />
+                  </ContactFormWrap>
+                ) : (
+                  ''
+                )}
+
+                {!visible ? (
+                  <NotifyButton>
+                    <Button
+                      type="submit"
+                      title="notifyText"
+                      onClick={toggleContact}
+                    />
+                  </NotifyButton>
+                ) : (
+                  ''
+                )}
+              </ContentWrapper>
+            </MainContentSection>
+          </Container>
+          <FooterSection>
+            {/* <SocialShare items={SOCIAL_PROFILES} /> */}
+            <p>
+              <FormattedMessage id="copyrightText" />
+            </p>
+          </FooterSection>
+        </MainWrapper>
+        <LanguageSwitcher languageConfig={languageConfig} />
+      </React.Fragment>
+    </LanguageProvider>
+  );
+};
+
+export default IndexPage;
