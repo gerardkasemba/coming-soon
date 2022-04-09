@@ -1,43 +1,53 @@
 {
-  "name": "@deadline/nextjs",
-  "version": "2.0.0",
-  "description": "Nextjs Coming Soon",
-  "main": "index.js",
-  "author": "RedQ Inc.",
+  "name": "deadline",
+  "version": "2.0.1",
+  "author": "RedQ, Inc.",
   "private": true,
+  "workspaces": [
+    "components",
+    "common",
+    "gatsbyjs",
+    "nextjs",
+    "docz"
+  ],
   "scripts": {
-    "dev": "next",
-    "build": "next build && next export",
-    "start": "next start",
-    "export": "yarn build && next export",
-    "vercel-build": "next build && next export -o dist"
+    "clean": "lerna clean --yes && rimraf node_modules",
+    "clean:build": "lerna exec -- rimraf \"{.next,dist,out,build,.docz,.cache, public}\"",
+    "gatsby-dev": "yarn workspace @deadline/gatsbyjs run develop",
+    "gatsby-build": "yarn workspace @deadline/gatsbyjs run build",
+    "gatsby-clean": "yarn workspace @deadline/gatsbyjs run clean",
+    "gatsby-serve": "yarn workspace @deadline/gatsbyjs run serve",
+    "nextjs-dev": "yarn workspace @deadline/nextjs run dev",
+    "nextjs-build": "yarn workspace @deadline/nextjs run build",
+    "nextjs-serve": "yarn workspace @deadline/nextjs run start",
+    "nextjs-export": "yarn workspace @deadline/nextjs run export",
+    "docz-dev": "yarn workspace @deadline/docz run docz:dev",
+    "docz-build": "yarn workspace @deadline/docz run docz:build",
+    "prebuild": "yarn clean:build"
   },
-  "dependencies": {
-    "@formatjs/intl-pluralrules": "^4.1.4",
-    "beautiful-react-hooks": "^1.0.1",
-    "next": "^12.1.4",
-    "next-seo": "^4.28.1",
-    "polished": "^4.1.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-fullpage": "^0.1.19",
-    "react-icons-kit": "^2.0.0",
-    "react-intl": "^5.20.12",
-    "react-modal": "^3.14.3",
-    "react-particles-js": "^3.5.3",
-    "styled-components": "^5.3.1",
-    "tsparticles": "^1.35.3"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,md,css,html}": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   },
   "devDependencies": {
-    "@babel/runtime-corejs2": "^7.15.4",
-    "babel-plugin-styled-components": "^1.13.2",
-    "eslint": "8.13.0",
-    "eslint-config-next": "12.1.4",
-    "imagemin-mozjpeg": "^8.0.0",
-    "imagemin-optipng": "^7.0.0",
-    "imagemin-svgo": "^7.0.0",
-    "next-compose-plugins": "^2.2.1",
-    "next-optimized-images": "^2.6.2",
-    "next-transpile-modules": "^8.0.0"
+    "cross-env": "^7.0.3",
+    "husky": "^7.0.2",
+    "lerna": "^4.0.0",
+    "lint-staged": "^11.2.0",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.6.2"
   }
 }
